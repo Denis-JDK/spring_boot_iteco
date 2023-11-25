@@ -1,6 +1,9 @@
 package com.iteco.spring_boot_iteco;
 
 
+import com.iteco.spring_boot_iteco.home_worke.ExternalInfo;
+import com.iteco.spring_boot_iteco.home_worke.ExternalService;
+import com.iteco.spring_boot_iteco.home_worke.ExternalServiceImpl;
 import com.iteco.spring_boot_iteco.model.BankBook;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +20,11 @@ public class SpringBootItecoApplication {
 		System.out.println(bank);
 		 bank.setId(120);
 		System.out.println(bank);
+
+		ExternalServiceImpl externalService = (ExternalServiceImpl) context.getBean(ExternalService.class);
+
+
+
 
 	}
 
