@@ -2,8 +2,7 @@ package com.iteco.spring_boot_iteco.controller;
 
 import com.iteco.spring_boot_iteco.model.UserDto;
 import com.iteco.spring_boot_iteco.service.UseService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,13 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable Integer id){
-        return useService.getById(id);
+    public ResponseEntity <UserDto> getUserById(@PathVariable Integer id){ //необходим ResponseEntity так как мы работаем с заголовками response, для задания cocke в headers response.
+        UserDto userDto = useService.getById(id);
+        ResponseCookie userId = ResponseCookie.from("userId", userDto.getId().toString()).maxAge(600).build(); //генерим cocke для клиента.
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, userId.toString()) //set cookie в response
+                .body(userDto);
     }
     @PostMapping
     public ResponseEntity <UserDto> createUser(@RequestBody UserDto userDto){
