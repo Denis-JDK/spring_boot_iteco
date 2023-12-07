@@ -30,6 +30,11 @@ public class BankBookController {
     public ResponseEntity<List<BankBookDto>> getBankBookByUserId(@CookieValue Integer userId){ //в postman отправляем запрос с заголовком Headers: Key=Cookie Value=userId=1; Max-Age=600; Expires=Thu, 07 Dec 2023 15:01:24 GMT и аннотация @CookieValue принимает и подставляет параметр и далее отрабатывает метод поиска с входящим в куках параметром
         return ResponseEntity.ok(bankBookService.findByUserId(userId));
     }
+    @GetMapping("/header/by-user-id")
+    public ResponseEntity<List<BankBookDto>> getBankBookByUserIdTestSpringHeader(@CookieValue Integer userId, @RequestHeader("Trace-Id") Integer traceId) {
+       log.info("Call with trace "+ traceId);  //http://localhost:8090/rest/bank-book/header/by-user-id  получаем трассировку @RequestHeader("Trace-Id") Integer traceId, трассировка нужна чтоб в микросервисной архитектуре проследить сколько сервисов было задействовано при запросе от клиента
+        return ResponseEntity.ok(bankBookService.findByUserId(userId));
+    }
     @PostMapping
     @SneakyThrows
     public ResponseEntity<BankBookDto> createBankBook(@RequestBody BankBookDto bankBookDto){
