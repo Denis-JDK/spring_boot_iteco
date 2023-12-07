@@ -7,19 +7,18 @@ import com.iteco.spring_boot_iteco.model.exception.BankBookWithCurrencyAlreadyHa
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice//АОП при срабатывании определенного исключения @ExceptionHandler(BankBookNotFoundException.class), задействуется определенный метод
 public class BankBookExceptionHandler {
-    @ResponseStatus(HttpStatus.NOT_FOUND) //задаем код ошибки в ответе, без аннотации будет ошибка, но код отобразится 200
-    @ExceptionHandler(BankBookNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND) //задаем код ошибки в ответе, без аннотации будет исключение в сервисе, но код у клиента отобразится 200
+    @ExceptionHandler(BankBookNotFoundException.class) //логика метода срабатывает при выкидывании исключения BankBookNotFoundException.class в BankBookServiceImpl
     public ErrorDto handleBankBookNotFoundException(BankBookNotFoundException e) {
         log.error("ERROR!", e);
         return ErrorDto.builder()
                 .status(HttpStatus.NOT_FOUND.name())
-                .message(e.getMessage()) //берем сообщение из отловленного исключения в try/catch
+                .message(e.getMessage()) //берем сообщение из отловленного исключения в BankBookServiceImpl
                 .build();
     }
 
@@ -33,7 +32,7 @@ public class BankBookExceptionHandler {
                 .build();
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler
+    @ExceptionHandler(BankBookWithCurrencyAlreadyHaveException.class)
     public ErrorDto handleBankBookWithCurrencyAlreadyHaveException(BankBookWithCurrencyAlreadyHaveException e) {
         log.error("ERROR!", e);
         return ErrorDto.builder()

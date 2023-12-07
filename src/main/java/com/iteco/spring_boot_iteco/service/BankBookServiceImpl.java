@@ -49,7 +49,7 @@ public class BankBookServiceImpl implements BankBookService{
                 .filter(bankBookDto -> userId.equals(bankBookDto.getUserId()))//фильтруем оставляя те которые совпадают с входным параметром userId
                 .collect(Collectors.toList()); //отфильтрованные данные формируем в коллекцию
         if (CollectionUtils.isEmpty(bankBookDtos)){
-            throw new BankBookNotFoundException("Для данного пользователя " + userId + " нет счетов");
+            throw new BankBookNotFoundException("Для данного пользователя " + userId + " нет счетов");//стандартизируем ответ при возникновении ошибки, поддерживаем контракт что даже при возникновении ошибки сервис ответит неким стандартным кодом и сообщением заданным нами
         }
         return bankBookDtos;
     }
@@ -62,7 +62,7 @@ public class BankBookServiceImpl implements BankBookService{
                 && bankBook.getNumber().equals(bankBookDto.getNumber())
                 && bankBook.getCurrency().equals(bankBookDto.getCurrency()));
         if (hasBankBook){
-            throw new BankBookWithCurrencyAlreadyHaveException("Счет # " + bankBookDto.getNumber() + " c валютой уже имеется!");
+            throw new BankBookWithCurrencyAlreadyHaveException("Счет # " + bankBookDto.getNumber() + " c валютой уже имеется!"); //костемизируем сообщение об ошибки в ответе для usera который сделал запрос
         }
         int id = sequenceId.getAndIncrement();
         bankBookDto.setId(id);
