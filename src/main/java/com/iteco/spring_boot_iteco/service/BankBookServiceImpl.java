@@ -37,7 +37,7 @@ public class BankBookServiceImpl implements BankBookService{
     public BankBookDto findById(Integer id) {
         BankBookDto bankBookDto = bankBookDtoMap.get(id);
         if (bankBookDto==null) {
-            throw new BankBookNotFoundException("Счет "+ id +" не найден!" );
+            throw new BankBookNotFoundException("Счет " + id + " не найден!" );
         }
         return bankBookDto;
     }
@@ -49,7 +49,7 @@ public class BankBookServiceImpl implements BankBookService{
                 .filter(bankBookDto -> userId.equals(bankBookDto.getUserId()))//фильтруем оставляя те которые совпадают с входным параметром userId
                 .collect(Collectors.toList()); //отфильтрованные данные формируем в коллекцию
         if (CollectionUtils.isEmpty(bankBookDtos)){
-            throw new BankBookNotFoundException("Для данного пользователя нет счетов");
+            throw new BankBookNotFoundException("Для данного пользователя " + userId + " нет счетов");
         }
         return bankBookDtos;
     }
@@ -62,7 +62,7 @@ public class BankBookServiceImpl implements BankBookService{
                 && bankBook.getNumber().equals(bankBookDto.getNumber())
                 && bankBook.getCurrency().equals(bankBookDto.getCurrency()));
         if (hasBankBook){
-            throw new BankBookWithCurrencyAlreadyHaveException("Счет c " + bankBookDto.getCurrency() + " валютой уже имеется!");
+            throw new BankBookWithCurrencyAlreadyHaveException("Счет # " + bankBookDto.getNumber() + " c валютой уже имеется!");
         }
         int id = sequenceId.getAndIncrement();
         bankBookDto.setId(id);
@@ -75,10 +75,10 @@ public class BankBookServiceImpl implements BankBookService{
     public BankBookDto update(BankBookDto bankBookDto) {
         BankBookDto bankBookDtoFromMap = bankBookDtoMap.get(bankBookDto.getId());
         if (bankBookDtoFromMap == null) {
-            throw new BankBookNotFoundException("Лицевой счет № "+ bankBookDto.getId() +" не найден!");
+            throw new BankBookNotFoundException("Лицевой # " + bankBookDto.getId() + " счет не найден!");
         }
         if (!bankBookDtoFromMap.getNumber().equals(bankBookDto.getNumber())) {
-            throw new BankBookNumberCannotBeModifiedException(bankBookDto.getNumber() +" лицевой счет менять нельзя!");
+            throw new BankBookNumberCannotBeModifiedException("Лицевой # " + bankBookDto.getNumber() + " счет менять нельзя!");
         }
         bankBookDtoMap.put(bankBookDto.getId(), bankBookDto);
         return bankBookDto;
