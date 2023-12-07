@@ -26,8 +26,8 @@ public class BankBookController {
         return ResponseEntity.ok(bankBookService.findById(id));
     }
 
-    @GetMapping("/by-user-id/{userId}")
-    public ResponseEntity<List<BankBookDto>> getBankBookByUserId(@PathVariable Integer userId){
+    @GetMapping("/by-user-id")
+    public ResponseEntity<List<BankBookDto>> getBankBookByUserId(@CookieValue Integer userId){ //в postman отправляем запрос с заголовком Headers: Key=Cookie Value=userId=1; Max-Age=600; Expires=Thu, 07 Dec 2023 15:01:24 GMT и аннотация @CookieValue принимает и подставляет параметр и далее отрабатывает метод поиска с входящим в куках параметром
         return ResponseEntity.ok(bankBookService.findByUserId(userId));
     }
     @PostMapping
