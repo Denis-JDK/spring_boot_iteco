@@ -17,4 +17,8 @@ public class DefaultController {
     ExternalInfo getInfo(){
         return externalService.getInfo();
     }
+    @GetMapping("/hi")
+    public ExternalInfo getHello(){
+        return externalService.getHello();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 @Slf4j
 @RestController
-@RequestMapping("/bank-book/")
+@RequestMapping("/rest/bank-book/")
 public class BankBookController {
 
     private final BankBookService bankBookService;
@@ -21,9 +21,9 @@ public class BankBookController {
     public BankBookController(BankBookService bankBookService) {
         this.bankBookService = bankBookService;
     }
-    @GetMapping({"/by-user-id/{id}", "/"})
-    public ResponseEntity<List<BankBookDto>> getBankBookById(@PathVariable Integer id){
-        return ResponseEntity.ok(Collections.singletonList(bankBookService.findById(id)));
+    @GetMapping({"/{id}","/"})
+    public ResponseEntity<BankBookDto> getBankBookById(@PathVariable Integer id){
+        return ResponseEntity.ok(bankBookService.findById(id));
     }
 
     @GetMapping("/by-user-id/{userId}")

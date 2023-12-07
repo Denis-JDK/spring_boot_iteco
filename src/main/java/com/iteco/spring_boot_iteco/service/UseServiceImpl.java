@@ -2,6 +2,7 @@ package com.iteco.spring_boot_iteco.service;
 
 import com.iteco.spring_boot_iteco.model.UserDto;
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@Service
 public class UseServiceImpl implements UseService{
 
     private final Map<Integer, UserDto> userDtoMap = new ConcurrentHashMap<>();

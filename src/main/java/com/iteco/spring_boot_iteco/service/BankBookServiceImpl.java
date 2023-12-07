@@ -4,6 +4,7 @@ import com.iteco.spring_boot_iteco.model.BankBookDto;
 import com.iteco.spring_boot_iteco.model.exception.BankBookNotFoundException;
 import com.iteco.spring_boot_iteco.model.exception.BankBookNumberCannotBeModifiedException;
 import com.iteco.spring_boot_iteco.model.exception.BankBookWithCurrencyAlreadyHaveException;
+import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -20,6 +21,7 @@ public class BankBookServiceImpl implements BankBookService{
     private final Map<Integer, BankBookDto> bankBookDtoMap = new ConcurrentHashMap<>();
     private final AtomicInteger sequenceId = new AtomicInteger(1);
 
+    @PostConstruct
     void init(){
         bankBookDtoMap.put(1, BankBookDto.builder()
                 .id(1)
