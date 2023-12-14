@@ -1,4 +1,32 @@
 server:
   port: 8090
+#  servlet:
+#    context-path: /geek
+
+spring:
+#  thymeleaf:
+#    prefix: classpath:/view/
+  datasource:
+    url: jdbc:postgresql://localhost:5490/iteco
+    username: root
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    spring.jpa.database-platform: org.hibernate.dialect.PostgresSQLDialect
+    batch:
+      jdbc:
+        initialize-schema: always
+    jpa:
+    show-sql: true
+    h2:
+      console:
+        enabled: true
+        settings:
+          web-allow-others: false
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+
 
 

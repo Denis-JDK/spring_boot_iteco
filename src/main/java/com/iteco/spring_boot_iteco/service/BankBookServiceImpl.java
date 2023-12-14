@@ -8,7 +8,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
